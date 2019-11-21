@@ -73,7 +73,7 @@
             <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd;"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mniQLNguoiHoc">
+            <MenuItem class="javax.swing.JMenuItem" name="mniQLSinhVien">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Conference.png"/>
@@ -81,10 +81,10 @@
                 <Property name="text" type="java.lang.String" value="Sinh vi&#xea;n"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLNguoiHocActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLSinhVienActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mniQLChuyenDe">
+            <MenuItem class="javax.swing.JMenuItem" name="mniQLSach">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Lists.png"/>
@@ -92,10 +92,10 @@
                 <Property name="text" type="java.lang.String" value="S&#xe1;ch"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLChuyenDeActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLSachActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mniQLKhoaHoc">
+            <MenuItem class="javax.swing.JMenuItem" name="mniQLPhieuMuon">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Certificate.png"/>
@@ -103,7 +103,7 @@
                 <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u m&#x1b0;&#x1ee3;n"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLKhoaHocActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniQLPhieuMuonActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniQLNhanVien">
@@ -124,39 +124,39 @@
             <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mniTKNguoiHoc">
+            <MenuItem class="javax.swing.JMenuItem" name="mniTKPMThang">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Clien list.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i m&#x1b0;&#x1ee3;n s&#xe1;ch theo th&#xe1;ng"/>
+                <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u m&#x1b0;&#x1ee3;n theo th&#xe1;ng"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKNguoiHocActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKPMThangActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mniTKBangDem">
+            <MenuItem class="javax.swing.JMenuItem" name="mniTKPMDaTra">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Card file.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="S&#xe1;ch &#x111;&#xe3; tr&#x1ea3;"/>
+                <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u m&#x1b0;&#x1ee3;n &#x111;&#xe3; tr&#x1ea3;"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKBangDemActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKPMDaTraActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mniTKKhoaHoc">
+            <MenuItem class="javax.swing.JMenuItem" name="mniTKPMChuaTra">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/Calendar.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="S&#xe1;ch ch&#x1b0;a tr&#x1ea3;"/>
+                <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u m&#x1b0;&#x1ee3;n ch&#x1b0;a tr&#x1ea3;"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKKhoaHocActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniTKPMChuaTraActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -166,6 +166,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="H&#x1ec6; TH&#x1ed0;NG QU&#x1ea2;N L&#xdd; &#x110;&#xc0;O T&#x1ea0;O" noResource="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -188,9 +189,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="toolbar" alignment="0" max="32767" attributes="0"/>
-          <Component id="jSeparator6" alignment="0" max="32767" attributes="0"/>
           <Component id="pnlTrangThai" alignment="0" max="32767" attributes="0"/>
-          <Component id="lblNoiDung" min="-2" max="-2" attributes="0"/>
+          <Component id="lblNoiDung" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -198,11 +198,9 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="toolbar" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblNoiDung" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jSeparator6" min="-2" pref="4" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="pnlTrangThai" min="-2" max="-2" attributes="0"/>
+              <Component id="lblNoiDung" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="pnlTrangThai" min="-2" pref="29" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -302,8 +300,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JSeparator" name="jSeparator6">
-    </Component>
     <Component class="javax.swing.JLabel" name="lblNoiDung">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>

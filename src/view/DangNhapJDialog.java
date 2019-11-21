@@ -5,6 +5,11 @@
  */
 package view;
 
+import dao.NhanVienDAO;
+import helper.DialogHelper;
+import helper.ShareHelper;
+import model.NhanVien;
+
 /**
  *
  * @author ASUS
@@ -17,6 +22,49 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        init();
+    }
+    NhanVienDAO dao = new NhanVienDAO();
+
+    void init() {
+        setLocationRelativeTo(null);
+    }
+
+    void Login() {
+        String manv = txtMaNV.getText();
+        String matKhau = new String(txtMatKhau.getPassword());
+        try {
+            NhanVien nhanVien = dao.findById(manv);
+            if (nhanVien != null) {
+                String matKhau2 = nhanVien.getMatKhau();
+                if (matKhau.equals(matKhau2)) {
+                    ShareHelper.USER = nhanVien;
+                    DialogHelper.alert(this, "Đăng nhập thành công!");
+                    this.dispose();
+
+                } else {
+                    DialogHelper.alert(this, "Sai mật khẩu!");
+                }
+            } else {
+                DialogHelper.alert(this, "Sai tên đăng nhập!");
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void exit() {
+        if (DialogHelper.confirm(this, "Bạn có muốn thoát khỏi ứng dụng không?")) {
+            System.exit(0);
+        }
+    }
+
+    public boolean isvalid() {
+        if (txtMaNV.getText().length() == 0) {
+            DialogHelper.alert(this, "Vui lòng nhập tên đăng nhập!");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -39,6 +87,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         btnKetThuc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
 
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/security.png"))); // NOI18N
         lblImage.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -101,7 +150,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDangNhap)
                     .addComponent(btnKetThuc))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -123,9 +172,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(pnlForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -133,11 +182,13 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        
+        if (this.isvalid()) {
+            this.Login();
+        }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetThucActionPerformed
-       
+        this.exit();
     }//GEN-LAST:event_btnKetThucActionPerformed
 
     /**

@@ -62,6 +62,7 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
         lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
 
         lblMaNH.setText("Mã người học");
 
