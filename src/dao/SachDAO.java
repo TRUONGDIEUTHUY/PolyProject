@@ -42,7 +42,7 @@ public class SachDAO {
     }
 
     public void delete(String MaSach) {
-        String sql = "DELETE FROM Sach WHERE MaCD=?";
+        String sql = "DELETE FROM Sach WHERE MaSach=?";
         JdbcHelper.executeUpdate(sql, MaSach);
     }
 
@@ -52,7 +52,7 @@ public class SachDAO {
     }
 
     public Sach findById(String masach) {
-        String sql = "SELECT * FROM Sach WHERE MaCD=?";
+        String sql = "SELECT * FROM Sach WHERE MaSach=?";
         List<Sach> list = select(sql, masach);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -86,6 +86,14 @@ public class SachDAO {
         model.setGiaTien(rs.getInt("GiaTien"));
         model.setNgayNK(rs.getDate("NgayNK"));
         return model;
+    }
+    public List<Sach> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM Sach WHERE TenSach LIKE ?";
+        return select(sql, "%" + keyword + "%");
+    }
+      public List<Sach> selectByCourse(Integer masach) {
+        String sql = "SELECT * FROM Sach WHERE MaSach NOT IN (SELECT MaSach FROM HocVien WHERE MaSach=?)";
+        return select(sql, masach);
     }
 }
 

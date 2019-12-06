@@ -38,7 +38,8 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
         model.setRowCount(0);
         try {
-            List<NhanVien> list = dao.select();
+            String keyword = txtTimKiem.getText();
+            List<NhanVien> list = dao.selectByKeyword(keyword);
             for (NhanVien nv : list) {
                 Object[] row = {
                     nv.getMaNV(),
@@ -121,10 +122,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
-
-    private void clear() {
-        this.setModel(new NhanVien());
-        this.setStatus(true);
+   void clear() {
+        NhanVien model = new NhanVien();
+        this.setModel(model);
     }
 
     void setModel(NhanVien model) {
@@ -562,7 +562,8 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tblGridViewMouseClicked
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-
+        this.load();
+        this.clear();
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

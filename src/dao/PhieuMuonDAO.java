@@ -19,32 +19,30 @@ import model.PhieuMuon;
 public class PhieuMuonDAO {
 
     public void insert(PhieuMuon model) {
-        String sql = "INSERT INTO PhieuMuon (MaPM, NgayMuon, NgayTra, MaSV, MaSach, MaNV,TrangThai) VALUES (?, ?, ?, ?, ?,?,?)";
+        String sql = "INSERT INTO PhieuMuon (MaPM, MaSV, MaNV, NgayMuon, NgayTra, TrangThai) VALUES (?,?, ?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
                 model.getMaPM(),
+                model.getMaSV(),
+                model.getMaNV(),
                 model.getNgayMuon(),
                 model.getNgayTra(),
-                model.getMaSV(),
-                model.getMaSach(),
-                model.getMaNV(),
                 model.isTrangThai());
     }
 
     public void update(PhieuMuon model) {
-        String sql = "UPDATE PhieuMuon SET MaPM=?, NgayMuon=?, NgayTra=?, MaSV=?, MaSach=?, MaNV=?,TrangThai=? WHERE MaPM =?";
+        String sql = "UPDATE PhieuMuon SET  MaSV=?, MaNV=?,NgayMuon=?, NgayTra=?,TrangThai=? WHERE MaPM =?";
         JdbcHelper.executeUpdate(sql,
+                model.getMaSV(),
+                model.getMaNV(),
                 model.getNgayMuon(),
                 model.getNgayTra(),
-                model.getMaSV(),
-                model.getMaSach(),
-                model.getMaNV(),
                 model.isTrangThai(),
                 model.getMaPM());
     }
 
-    public void delete(Integer MaKH) {
-        String sql = "DELETE FROM PhieuMuon WHERE MaKH=?";
-        JdbcHelper.executeUpdate(sql, MaKH);
+    public void delete(int mapm) {
+        String sql = "DELETE FROM PhieuMuon WHERE MaPM=?";
+        JdbcHelper.executeUpdate(sql, mapm);
     }
 
     public List<PhieuMuon> select() {
@@ -52,9 +50,9 @@ public class PhieuMuonDAO {
         return select(sql);
     }
 
-    public PhieuMuon findById(Integer makh) {
-        String sql = "SELECT * FROM PhieuMuon WHERE MaKH=?";
-        List<PhieuMuon> list = select(sql, makh);
+    public PhieuMuon findById(int mapm) {
+        String sql = "SELECT * FROM PhieuMuon WHERE MaPM=?";
+        List<PhieuMuon> list = select(sql, mapm);
         return list.size() > 0 ? list.get(0) : null;
     }
 
@@ -79,15 +77,18 @@ public class PhieuMuonDAO {
 
     private PhieuMuon readFromResultSet(ResultSet rs) throws SQLException {
         PhieuMuon model = new PhieuMuon();
-        model.setMaPM(rs.getString("MaPM"));
+        model.setMaPM(rs.getInt("MaPM"));
         model.setNgayMuon(rs.getDate("NgayMuon"));
         model.setNgayTra(rs.getDate("NgayTra"));
         model.setMaSV(rs.getString("MaSV"));
-        model.setMaSach(rs.getString("MaSach"));
         model.setMaNV(rs.getString("MaNV"));
         model.setTrangThai(rs.getBoolean("TrangThai"));
 
         return model;
+    }
+ public List<PhieuMuon> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM PhieuMuon WHERE TenSV LIKE ?";
+        return select(sql, "%" + keyword + "%");
     }
 }
 

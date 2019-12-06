@@ -18,7 +18,7 @@ public class JdbcHelper {
     private static String username = "sa";
     private static String password = "123";
 
-    static {
+   static {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {

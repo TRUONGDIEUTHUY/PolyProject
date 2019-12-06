@@ -5,6 +5,8 @@
  */
 package view;
 
+
+
 /**
  *
  * @author ASUS
@@ -14,13 +16,12 @@ public class ThongKeJFrame extends javax.swing.JFrame {
     /**
      * Creates new form ThongKeJFrame
      */
-    public ThongKeJFrame() {
+    public ThongKeJFrame(int index) {
         initComponents();
-    }
 
-    ThongKeJFrame(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,24 +36,24 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         tabs = new javax.swing.JTabbedPane();
         pnlNguoiHoc = new javax.swing.JPanel();
         pnlList = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tblGridView = new javax.swing.JTable();
         pnlTimKiem = new javax.swing.JPanel();
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblGridView = new javax.swing.JTable();
         pnlBangDiem = new javax.swing.JPanel();
         pnlList1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblGridView1 = new javax.swing.JTable();
         pnlTimKiem1 = new javax.swing.JPanel();
         txtTimKiem1 = new javax.swing.JTextField();
         btnTimKiem1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblGridView3 = new javax.swing.JTable();
         pnlTongHop = new javax.swing.JPanel();
         pnlKhoaHoc1 = new javax.swing.JPanel();
         lblKhoaHoc1 = new javax.swing.JLabel();
         cboPhieuMuon = new javax.swing.JComboBox<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblGridView2 = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblGridView4 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
@@ -62,32 +63,6 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         jLabel1.setText("TỔNG HỢP THỐNG KÊ");
 
         pnlNguoiHoc.setLayout(new java.awt.BorderLayout());
-
-        tblGridView.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "MÃ PHIẾU MƯỢN", "NGÀY MƯỢN", "NGÀY TRẢ", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "MÃ SÁCH"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblGridView.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGridViewMouseClicked(evt);
-            }
-        });
-        jScrollPane6.setViewportView(tblGridView);
 
         pnlTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌM KIẾM"));
 
@@ -119,6 +94,41 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tblGridView.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "MÃ PHIẾU MƯỢN", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "NGÀY MƯỢN", "NGÀY TRẢ"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblGridView.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblGridViewAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tblGridView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridViewMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblGridView);
+
         javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
         pnlList.setLayout(pnlListLayout);
         pnlListLayout.setHorizontalGroup(
@@ -126,17 +136,20 @@ public class ThongKeJFrame extends javax.swing.JFrame {
             .addGroup(pnlListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlListLayout.createSequentialGroup()
+                        .addComponent(pnlTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
+                .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pnlNguoiHoc.add(pnlList, java.awt.BorderLayout.PAGE_START);
@@ -144,32 +157,6 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         tabs.addTab("PHIẾU MƯỢN ĐÃ TRẢ", pnlNguoiHoc);
 
         pnlBangDiem.setLayout(new java.awt.BorderLayout());
-
-        tblGridView1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "MÃ PHIẾU MƯỢN", "NGÀY MƯỢN", "NGÀY TRẢ", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "MÃ SÁCH"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblGridView1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGridView1MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tblGridView1);
 
         pnlTimKiem1.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌM KIẾM"));
 
@@ -201,6 +188,32 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tblGridView3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "MÃ PHIẾU MƯỢN", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "NGÀY MƯỢN", "NGÀY TRẢ", "TRẠNG THÁI"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblGridView3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridView3MouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblGridView3);
+
         javax.swing.GroupLayout pnlList1Layout = new javax.swing.GroupLayout(pnlList1);
         pnlList1.setLayout(pnlList1Layout);
         pnlList1Layout.setHorizontalGroup(
@@ -209,18 +222,23 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlList1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(pnlList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlList1Layout.createSequentialGroup()
+                    .addGap(4, 4, 4)
+                    .addComponent(jScrollPane5)
+                    .addGap(4, 4, 4)))
         );
         pnlList1Layout.setVerticalGroup(
             pnlList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlList1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
+            .addGroup(pnlList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlList1Layout.createSequentialGroup()
+                    .addGap(80, 80, 80)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(80, Short.MAX_VALUE)))
         );
 
         pnlBangDiem.add(pnlList1, java.awt.BorderLayout.CENTER);
@@ -265,33 +283,33 @@ public class ThongKeJFrame extends javax.swing.JFrame {
 
         pnlTongHop.add(pnlKhoaHoc1, java.awt.BorderLayout.PAGE_START);
 
-        tblGridView2.setModel(new javax.swing.table.DefaultTableModel(
+        tblGridView4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "MÃ PHIẾU MƯỢN", "NGÀY MƯỢN", "NGÀY TRẢ", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "MÃ SÁCH"
+                "MÃ PHIẾU MƯỢN", "MÃ SINH VIÊN", "MÃ NHÂN VIÊN", "NGÀY MƯỢN", "NGÀY TRẢ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblGridView2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblGridView4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGridView2MouseClicked(evt);
+                tblGridView4MouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tblGridView2);
+        jScrollPane6.setViewportView(tblGridView4);
 
-        pnlTongHop.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+        pnlTongHop.add(jScrollPane6, java.awt.BorderLayout.CENTER);
 
         tabs.addTab("PHIẾU MƯỢN THEO THÁNG", pnlTongHop);
 
@@ -314,7 +332,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addComponent(tabs)
                 .addContainerGap())
         );
 
@@ -325,27 +343,31 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboPhieuMuonPopupMenuWillBecomeInvisible
 
-    private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_tblGridViewMouseClicked
-
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
 
     }//GEN-LAST:event_btnTimKiemActionPerformed
-
-    private void tblGridView1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView1MouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_tblGridView1MouseClicked
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
 
     }//GEN-LAST:event_btnTimKiem1ActionPerformed
 
-    private void tblGridView2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView2MouseClicked
+    private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblGridView2MouseClicked
+      
+    }//GEN-LAST:event_tblGridViewMouseClicked
+
+    private void tblGridView3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblGridView3MouseClicked
+
+    private void tblGridView4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblGridView4MouseClicked
+
+    private void tblGridViewAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblGridViewAncestorAdded
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_tblGridViewAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -377,7 +399,7 @@ public class ThongKeJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ThongKeJFrame().setVisible(true);
+                new ThongKeJFrame(0).setVisible(true);
             }
         });
     }
@@ -387,8 +409,8 @@ public class ThongKeJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnTimKiem1;
     private javax.swing.JComboBox<String> cboPhieuMuon;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblKhoaHoc1;
     private javax.swing.JPanel pnlBangDiem;
@@ -401,8 +423,8 @@ public class ThongKeJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTongHop;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblGridView;
-    private javax.swing.JTable tblGridView1;
-    private javax.swing.JTable tblGridView2;
+    private javax.swing.JTable tblGridView3;
+    private javax.swing.JTable tblGridView4;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTimKiem1;
     // End of variables declaration//GEN-END:variables

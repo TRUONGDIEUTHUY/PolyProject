@@ -78,5 +78,8 @@ public class NhanVienDAO {
         model.setVaiTro(rs.getBoolean("VaiTro"));
         return model;
     }
-
+public List<NhanVien> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM NhanVien WHERE HoTen LIKE ?";
+        return select(sql, "%" + keyword + "%");
+    }
 }

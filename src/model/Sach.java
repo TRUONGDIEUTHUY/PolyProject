@@ -18,6 +18,14 @@ private String nhaXB;
 private String tacGia;
 private int soLuong;
 private int giaTien;
+
+    @Override
+    public String toString() {
+        return this.tenSach;
+    }
+
+
+
 private Date ngayNK=helper.DateHelper.now();
 
     public Sach() {

@@ -9,6 +9,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -67,7 +70,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtHoTen" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMaNH" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMaSV" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="txtChuyenNganh" alignment="1" max="32767" attributes="0"/>
@@ -120,7 +123,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblMaNH" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtMaNH" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMaSV" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblHoTen" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -174,10 +177,10 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblMaNH">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M&#xe3; ng&#x1b0;&#x1edd;i h&#x1ecd;c"/>
+                <Property name="text" type="java.lang.String" value="M&#xe3; sinh vi&#xea;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtMaNH">
+            <Component class="javax.swing.JTextField" name="txtMaSV">
             </Component>
             <Component class="javax.swing.JLabel" name="lblHoTen">
               <Properties>

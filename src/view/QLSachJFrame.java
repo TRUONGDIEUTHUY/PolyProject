@@ -5,6 +5,18 @@
  */
 package view;
 
+import dao.SachDAO;
+import helper.DateHelper;
+import helper.DialogHelper;
+import helper.ShareHelper;
+import java.awt.Color;
+import java.awt.HeadlessException;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Sach;
+
 /**
  *
  * @author ASUS
@@ -16,8 +28,173 @@ public class QLSachJFrame extends javax.swing.JFrame {
      */
     public QLSachJFrame() {
         initComponents();
+        init();
+    }
+    int index = 0;
+    SachDAO sach = new SachDAO();
+
+    void init() {
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
     }
 
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
+        model.setRowCount(0);
+        try {
+            String keyword = txtTimKiem.getText();
+            List<Sach> list = sach.selectByKeyword(keyword);
+            for (Sach sa : list) {
+                Object[] row = {
+                    sa.getMaSach(),
+                    sa.getTenSach(),
+                    sa.getNhaXB(),
+                    sa.getTacGia(),
+                    sa.getGiaTien(),
+                    sa.getSoLuong(),
+                    DateHelper.toString(sa.getNgayNK()),
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void insert() {
+        Sach model = getModel();
+        model.setNgayNK(new Date());
+        try {
+            sach.insert(model);
+            this.load();
+            this.clear();
+            DialogHelper.alert(this, "Thêm mới thành công!");
+        } catch (HeadlessException e) {
+            DialogHelper.alert(this, "Thêm mới thất bại!");
+        }
+    }
+
+    void update() {
+        Sach model = getModel();
+        try {
+            sach.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa sách này?")) {
+            String masach = txtMaSach.getText();
+            try {
+                sach.delete(masach);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
+        }
+
+    }
+
+    void clear() {
+        Sach model = new Sach();
+        model.setNgayNK(DateHelper.now());
+        this.setModel(model);
+        this.setStatus(true);
+    }
+
+    void edit() {
+        try {
+            String masach = (String) tblGridView.getValueAt(this.index, 0);
+            Sach model = sach.findById(masach);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void setModel(Sach model) {
+        txtMaSach.setText(model.getMaSach());
+        txtTenSach.setText(model.getTacGia());
+        txtNhaXB.setText(model.getNhaXB());
+        txtTacGia.setText(model.getTacGia());
+        txtGiaTien.setText(String.valueOf(model.getGiaTien()));
+        txtSoLuong.setText(String.valueOf(model.getSoLuong()));
+        txtNgayNK.setText(DateHelper.toString(model.getNgayNK()));
+    }
+
+    Sach getModel() {
+        Sach model = new Sach();
+        model.setMaSach(txtMaSach.getText());
+        model.setTenSach(txtTenSach.getText());
+        model.setNhaXB(txtNhaXB.getText());
+        model.setTacGia(txtTacGia.getText());
+        model.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+        model.setGiaTien(Integer.valueOf(txtGiaTien.getText()));
+        model.setNgayNK(DateHelper.toDate(txtNgayNK.getText()));
+        return model;
+    }
+
+    void setStatus(boolean insertable) {
+        btnInsert.setEnabled(insertable);
+        btnUpdate.setEnabled(!insertable);
+        btnDelete.setEnabled(!insertable);
+
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGridView.getRowCount() - 1;
+        btnFirst.setEnabled(!insertable && first);
+        btnPrev.setEnabled(!insertable && first);
+        btnLast.setEnabled(!insertable && last);
+        btnNext.setEnabled(!insertable && last);
+
+    }
+ public boolean isvalid() {
+        String reTen = "[a-zA-Z ]+";
+        if (txtMaSach.getText().isEmpty() || txtTenSach.getText().isEmpty() || txtNhaXB.getText().isEmpty() || txtTacGia.getText().isEmpty() || txtGiaTien.getText().isEmpty()|| txtSoLuong.getText().isEmpty()|| txtNgayNK.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin");
+            return false;
+        } else {
+        if (txtMaSach.getText().length() < 5 || txtMaSach.getText().length() > 5) {
+            JOptionPane.showMessageDialog(this, "Mã sách phải đúng 5 kí tự");
+            txtMaSach.setBackground(Color.yellow);
+            return false;
+        } else {
+            txtMaSach.setBackground(Color.white);
+        }
+        if (txtTenSach.getText().matches(reTen) == false) {
+            JOptionPane.showMessageDialog(this, "Tên sách chỉ chứa alphabet và ký tự trắng");
+            txtTenSach.setBackground(Color.yellow);
+            return false;
+        } else {
+            txtTenSach.setBackground(Color.white);
+        }
+            if (Integer.parseInt(txtSoLuong.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn hoặc bằng 0");
+            txtSoLuong.setBackground(Color.yellow);
+            return false;
+        } else {
+            txtSoLuong.setBackground(Color.white);
+
+        }
+        if (Integer.parseInt(txtGiaTien.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Giá tiền phải lớn hơn hoặc bằng 0");
+            txtGiaTien.setBackground(Color.yellow);
+            return false;
+        } else {
+            txtGiaTien.setBackground(Color.white);
+
+        }
+        }
+        return true;
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,6 +238,11 @@ public class QLSachJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(0, 0, 204));
@@ -339,35 +521,43 @@ public class QLSachJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-
+      if(this.isvalid()){
+            this.insert();
+        }
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-
+         if(this.isvalid()){
+            this.update();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        this.delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-
+        this.clear();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
-
+        this.index = 0;
+        this.edit();
     }//GEN-LAST:event_btnFirstActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-
+        this.index--;
+        this.edit();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-
+        this.index++;
+        this.edit();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-
+        this.index = tblGridView.getRowCount() - 1;
+        this.edit();
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
@@ -375,16 +565,32 @@ public class QLSachJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSoLuongActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        this.load();
+        this.clear();
 
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
-
+        if (evt.getClickCount() == 2) {
+            this.index = tblGridView.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                tabs.setSelectedIndex(0);
+            }
+        }
     }//GEN-LAST:event_tblGridViewMouseClicked
 
     private void txtNhaXBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhaXBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNhaXBActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+
+        this.load();
+        this.clear();
+        this.setStatus(true);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

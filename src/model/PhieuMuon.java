@@ -13,32 +13,56 @@ import java.util.Date;
  */
 public class PhieuMuon {
 
-    private String maPM;
+    private int maPM;
+    private String maSach;
+    private String maSV;
+    private String maNV;
     private Date ngayMuon = helper.DateHelper.now();
     private Date ngayTra;
-    private String maSV;
-    private String maSach;
-    private String maNV;
     private boolean trangThai;
 
     public PhieuMuon() {
     }
 
-    public PhieuMuon(String maPM, Date ngayTra, String maSV, String maSach, String maNV, boolean trangThai) {
+    public PhieuMuon(int maPM, String maSach, String maSV, String maNV, Date ngayTra, boolean trangThai) {
         this.maPM = maPM;
-        this.ngayTra = ngayTra;
-        this.maSV = maSV;
         this.maSach = maSach;
+        this.maSV = maSV;
         this.maNV = maNV;
+        this.ngayTra = ngayTra;
         this.trangThai = trangThai;
     }
 
-    public String getMaPM() {
+    public int getMaPM() {
         return maPM;
     }
 
-    public void setMaPM(String maPM) {
+    public void setMaPM(int maPM) {
         this.maPM = maPM;
+    }
+
+    public String getMaSach() {
+        return maSach;
+    }
+
+    public void setMaSach(String maSach) {
+        this.maSach = maSach;
+    }
+
+    public String getMaSV() {
+        return maSV;
+    }
+
+    public void setMaSV(String maSV) {
+        this.maSV = maSV;
+    }
+
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
     public Date getNgayMuon() {
@@ -57,30 +81,6 @@ public class PhieuMuon {
         this.ngayTra = ngayTra;
     }
 
-    public String getMaSV() {
-        return maSV;
-    }
-
-    public void setMaSV(String maSV) {
-        this.maSV = maSV;
-    }
-
-    public String getMaSach() {
-        return maSach;
-    }
-
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
-    }
-
-    public String getMaNV() {
-        return maNV;
-    }
-
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
-    }
-
     public boolean isTrangThai() {
         return trangThai;
     }
@@ -88,5 +88,7 @@ public class PhieuMuon {
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
+
+    
 
 }

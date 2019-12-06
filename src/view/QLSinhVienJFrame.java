@@ -5,6 +5,17 @@
  */
 package view;
 
+import dao.SinhVienDAO;
+import helper.DateHelper;
+import helper.DialogHelper;
+import helper.ShareHelper;
+import java.awt.Color;
+import java.awt.HeadlessException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.SinhVien;
+
 /**
  *
  * @author ASUS
@@ -16,8 +27,171 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
      */
     public QLSinhVienJFrame() {
         initComponents();
+        init();
+    }
+    int index = 0;
+    SinhVienDAO dao = new SinhVienDAO();
+
+    void init() {
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
     }
 
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
+        model.setRowCount(0);
+        try {
+            String keyword = txtTimKiem.getText();
+            List<SinhVien> list = dao.selectByKeyword(keyword);
+            for (SinhVien nh : list) {
+                Object[] row = {
+                    nh.getMaSV(),
+                    nh.getTenSV(),
+                    nh.isGioiTinh() ? "Nam" : "Nữ",
+                    DateHelper.toString(nh.getNgaySinh()),
+                    nh.getSdt(),
+                    nh.getEmail(),
+                    nh.getChuyenNganh(),
+                    nh.getLop()
+
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void insert() {
+        SinhVien model = getModel();
+        try {
+            dao.insert(model);
+            this.load();
+            this.clear();
+            DialogHelper.alert(this, "Thêm mới thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Thêm mới thất bại!");
+        }
+    }
+
+    void update() {
+        SinhVien model = getModel();
+        try {
+            dao.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
+            String masv = txtMaSV.getText();
+            try {
+                dao.delete(masv);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (HeadlessException e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    void clear() {
+        SinhVien model = new SinhVien();
+        this.setModel(model);
+    }
+
+    void edit() {
+        try {
+            String manh = (String) tblGridView.getValueAt(this.index, 0);
+            SinhVien model = dao.findById(manh);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void setModel(SinhVien model) {
+        txtMaSV.setText(model.getMaSV());
+        txtHoTen.setText(model.getTenSV());
+        cboGioiTinh.setSelectedIndex(model.isGioiTinh() ? 0 : 1);
+        txtNgaySinh.setText(DateHelper.toString(model.getNgaySinh()));
+        txtDienThoai.setText(model.getSdt());
+        txtEmail.setText(model.getEmail());
+        txtChuyenNganh.setText(model.getChuyenNganh());
+        txtLop.setText(model.getLop());
+
+    }
+
+    SinhVien getModel() {
+        SinhVien model = new SinhVien();
+        model.setMaSV(txtMaSV.getText());
+        model.setTenSV(txtHoTen.getText());
+        model.setGioiTinh(cboGioiTinh.getSelectedIndex() == 0);
+        model.setNgaySinh(DateHelper.toDate(txtNgaySinh.getText()));
+        model.setSdt(txtDienThoai.getText());
+        model.setEmail(txtEmail.getText());
+        model.setChuyenNganh(txtChuyenNganh.getText());
+        model.setLop(txtLop.getText());
+        return model;
+    }
+
+    void setStatus(boolean insertable) {
+        txtMaSV.setEditable(insertable);
+        btnInsert.setEnabled(insertable);
+        btnUpdate.setEnabled(!insertable);
+        btnDelete.setEnabled(!insertable);
+
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGridView.getRowCount() - 1;
+        btnFirst.setEnabled(!insertable && first);
+        btnPrev.setEnabled(!insertable && first);
+        btnLast.setEnabled(!insertable && last);
+        btnNext.setEnabled(!insertable && last);
+    }
+public boolean isvalid() {
+        String reHoTen = "[a-zA-Z ]+";
+        String reEmail = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+       if (txtMaSV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtDienThoai.getText().isEmpty() || txtEmail.getText().isEmpty() || txtNgaySinh.getText().isEmpty()|| txtChuyenNganh.getText().isEmpty()|| txtLop.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin");
+            return false;
+        } else {
+        if (txtMaSV.getText().length()<5||txtMaSV.getText().length()>5) {
+            JOptionPane.showMessageDialog(this, "Mã sinh viên phải đúng 5 kí tự");
+            txtMaSV.setBackground(Color.yellow);
+            return false;
+        } else {
+            txtMaSV.setBackground(Color.white);
+       }
+        if (txtHoTen.getText().matches(reHoTen) == false) {
+                JOptionPane.showMessageDialog(this, "Họ tên chỉ chứa alphabet và ký tự trắng");
+                txtHoTen.setBackground(Color.yellow);
+               return false;
+            } else {
+                txtHoTen.setBackground(Color.white);
+            }
+          if (txtEmail.getText().matches(reEmail) == false) {
+                JOptionPane.showMessageDialog(this, "Sai định dạng Email");
+                txtEmail.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtEmail.setBackground(Color.white);
+            }
+          String strNgaySinh=txtNgaySinh.getText();
+          if ((DateHelper.now().getYear() - DateHelper.toDate(txtNgaySinh.getText(), "MM/dd/yyyy").getYear()) < 16) {
+            JOptionPane.showMessageDialog(this, "Người học ít nhất phải đủ 16 tuổi!\n");
+            return false;
+        }
+       }
+        return true;
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +204,7 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
         tabs = new javax.swing.JTabbedPane();
         pnlList = new javax.swing.JPanel();
         lblMaNH = new javax.swing.JLabel();
-        txtMaNH = new javax.swing.JTextField();
+        txtMaSV = new javax.swing.JTextField();
         lblHoTen = new javax.swing.JLabel();
         txtHoTen = new javax.swing.JTextField();
         lblGioiTinh = new javax.swing.JLabel();
@@ -63,8 +237,13 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        lblMaNH.setText("Mã người học");
+        lblMaNH.setText("Mã sinh viên");
 
         lblHoTen.setText("Họ và tên");
 
@@ -152,7 +331,7 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtHoTen)
-                    .addComponent(txtMaNH)
+                    .addComponent(txtMaSV)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
                         .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtChuyenNganh, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -196,7 +375,7 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblMaNH)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMaNH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMaSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblHoTen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -344,48 +523,69 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-    
+       if (this.isvalid()) {
+            this.insert();
+        }
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-     
+        if (this.isvalid()) {
+            this.update();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-   
+        this.delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-    
+        this.clear();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
-      
+        this.index = 0;
+        this.edit();
     }//GEN-LAST:event_btnFirstActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-      
+        this.index--;
+        this.edit();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-
+        this.index++;
+        this.edit();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-    
+        this.index = tblGridView.getRowCount() - 1;
+        this.edit();
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-     
+        this.load();
+        this.clear();
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
-
+        if (evt.getClickCount() == 2) {
+            this.index = tblGridView.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                tabs.setSelectedIndex(0);
+            }
+        }
     }//GEN-LAST:event_tblGridViewMouseClicked
 
     private void txtChuyenNganhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtChuyenNganhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtChuyenNganhActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.load();
+        this.setStatus(true);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -453,7 +653,7 @@ public class QLSinhVienJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtLop;
-    private javax.swing.JTextField txtMaNH;
+    private javax.swing.JTextField txtMaSV;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
