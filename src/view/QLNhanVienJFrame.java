@@ -1,4 +1,3 @@
-
 package view;
 
 import dao.NhanVienDAO;
@@ -9,7 +8,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
-
 
 /**
  *
@@ -34,7 +32,7 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-      void load() {
+    void load() {
         DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
         model.setRowCount(0);
         try {
@@ -54,12 +52,16 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
+
     void insert() {
         NhanVien model = getModel();
         NhanVien kt = dao.findById(txtMaNV.getText());
         if (kt != null) {
             DialogHelper.alert(this, "Trùng mã nhân viên");
+            txtMaNV.setBackground(Color.yellow);
             return;
+        } else {
+            txtMaNV.setBackground(Color.white);
         }
         String confirm = new String(txtXacNhanMK.getPassword());
         if (confirm.equals(model.getMatKhau())) {
@@ -74,7 +76,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             }
         } else {
             DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
+
         }
+
     }
 
     void update() {
@@ -83,7 +87,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         String confirm = new String(txtXacNhanMK.getPassword());
         if (!confirm.equals(model.getMatKhau())) {
             DialogHelper.alert(this, "Xác nhận mật khẩu không đúng!");
+            txtXacNhanMK.setBackground(Color.yellow);
         } else {
+            txtXacNhanMK.setBackground(Color.white);
             try {
                 dao.update(model);
                 this.load();
@@ -122,7 +128,8 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
-   void clear() {
+
+    void clear() {
         NhanVien model = new NhanVien();
         this.setModel(model);
     }
@@ -162,34 +169,39 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
 
     public boolean isvalid() {
         String reHoTen = "[a-zA-Z ]+";
-        if (txtMaNV.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Nhập mã NV");
-            txtMaNV.setBackground(Color.yellow);
+        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtMatKhau.getText().isEmpty() || txtXacNhanMK.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin");
             return false;
         } else {
-            txtMaNV.setBackground(Color.white);
-        }
-        if (txtMatKhau.getPassword().length < 3) {
-            JOptionPane.showMessageDialog(this, "Mật khẩu phải chứ ít nhất 3 kí tự");
-            txtMatKhau.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtMatKhau.setBackground(Color.white);
-        }
-        if (txtHoTen.getText().matches(reHoTen) == false) {
-            JOptionPane.showMessageDialog(this, "Họ tên chỉ chứa alphabet và ký tự trắng");
-            txtHoTen.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtHoTen.setBackground(Color.white);
-        }
-        if (!rdoTruongPhong.isSelected() && !rdoNhanVien.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Hãy chọn vai trò");
-            return false;
-        }
 
+            if (txtMaNV.getText().length() < 4) {
+                JOptionPane.showMessageDialog(this, "Mã nhân viên phải ít nhất 4 kí tự");
+                txtMaNV.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtMaNV.setBackground(Color.white);
+            }
+            if (txtMatKhau.getPassword().length < 3) {
+                JOptionPane.showMessageDialog(this, "Mật khẩu phải chứa ít nhất 3 kí tự");
+                txtMatKhau.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtMatKhau.setBackground(Color.white);
+            }
+            if (txtHoTen.getText().matches(reHoTen) == false) {
+                JOptionPane.showMessageDialog(this, "Họ tên chỉ chứa alphabet và ký tự trắng");
+                txtHoTen.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtHoTen.setBackground(Color.white);
+            }
+            if (!rdoTruongPhong.isSelected() && !rdoNhanVien.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Hãy chọn vai trò");
+                return false;
+            }
+
+        }
         return true;
-
     }
 
     public boolean Valid() {
@@ -239,7 +251,7 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -251,12 +263,18 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("QUẢN LÝ NHÂN VIÊN QUẢN TRỊ");
 
+        tabs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        lblMaNV.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMaNV.setText("Mã nhân viên");
 
+        lblMatKhau.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMatKhau.setText("Mật khẩu");
 
+        lblHoTen.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblHoTen.setText("Họ và tên");
 
+        lblVaiTro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVaiTro.setText("Vai trò");
 
         buttonGroup1.add(rdoTruongPhong);
@@ -266,6 +284,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         buttonGroup1.add(rdoNhanVien);
         rdoNhanVien.setText("Nhân viên");
 
+        btnInsert.setBackground(new java.awt.Color(51, 153, 255));
+        btnInsert.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Save.png"))); // NOI18N
         btnInsert.setText("Thêm");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,6 +294,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnUpdate.setBackground(new java.awt.Color(51, 153, 255));
+        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Edit.png"))); // NOI18N
         btnUpdate.setText("Sửa");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +304,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnDelete.setBackground(new java.awt.Color(51, 153, 255));
+        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnDelete.setText("Xóa");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,6 +314,9 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnClear.setBackground(new java.awt.Color(51, 153, 255));
+        btnClear.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add.png"))); // NOI18N
         btnClear.setText("Mới");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,34 +324,41 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnFirst.setText("|<");
+        btnFirst.setBackground(new java.awt.Color(51, 153, 255));
+        btnFirst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/first.png"))); // NOI18N
         btnFirst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFirstActionPerformed(evt);
             }
         });
 
-        btnPrev.setText("<<");
+        btnPrev.setBackground(new java.awt.Color(51, 153, 255));
+        btnPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
+        btnPrev.setMaximumSize(new java.awt.Dimension(63, 33));
+        btnPrev.setMinimumSize(new java.awt.Dimension(63, 33));
         btnPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrevActionPerformed(evt);
             }
         });
 
-        btnNext.setText(">>");
+        btnNext.setBackground(new java.awt.Color(51, 153, 255));
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/next.png"))); // NOI18N
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNextActionPerformed(evt);
             }
         });
 
-        btnLast.setText(">|");
+        btnLast.setBackground(new java.awt.Color(51, 153, 255));
+        btnLast.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/last.png"))); // NOI18N
         btnLast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLastActionPerformed(evt);
             }
         });
 
+        lblXacNhanMK.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblXacNhanMK.setText("Xác nhận mật khẩu");
 
         javax.swing.GroupLayout pnlEditLayout = new javax.swing.GroupLayout(pnlEdit);
@@ -331,25 +368,6 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             .addGroup(pnlEditLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlEditLayout.createSequentialGroup()
-                        .addComponent(btnInsert)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUpdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnClear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(btnFirst)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPrev)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnNext)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLast))
-                    .addComponent(txtMatKhau)
-                    .addComponent(txtHoTen)
-                    .addComponent(txtMaNV)
                     .addGroup(pnlEditLayout.createSequentialGroup()
                         .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMaNV)
@@ -362,6 +380,25 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
                             .addComponent(lblMatKhau)
                             .addComponent(lblXacNhanMK))
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditLayout.createSequentialGroup()
+                        .addComponent(btnInsert)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(btnFirst)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNext)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLast))
+                    .addComponent(txtMatKhau)
+                    .addComponent(txtHoTen)
+                    .addComponent(txtMaNV)
                     .addComponent(txtXacNhanMK))
                 .addContainerGap())
         );
@@ -391,15 +428,16 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
                     .addComponent(rdoTruongPhong)
                     .addComponent(rdoNhanVien))
                 .addGap(22, 22, 22)
-                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsert)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnClear)
-                    .addComponent(btnFirst)
-                    .addComponent(btnPrev)
-                    .addComponent(btnNext)
-                    .addComponent(btnLast))
+                .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete)
+                        .addComponent(btnClear))
+                    .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -431,8 +469,11 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblGridView);
 
-        pnlTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌM KIẾM"));
+        pnlTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TÌM KIẾM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        btnTimKiem.setBackground(new java.awt.Color(51, 153, 255));
+        btnTimKiem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search.png"))); // NOI18N
         btnTimKiem.setText("Tìm");
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -446,10 +487,10 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTimKiemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addComponent(btnTimKiem)
-                .addContainerGap())
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         pnlTimKiemLayout.setVerticalGroup(
             pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,11 +506,11 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
         pnlList.setLayout(pnlListLayout);
         pnlListLayout.setHorizontalGroup(
             pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(pnlTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
@@ -477,8 +518,8 @@ public class QLNhanVienJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

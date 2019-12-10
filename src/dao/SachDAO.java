@@ -17,6 +17,7 @@ import model.Sach;
  * @author ASUS
  */
 public class SachDAO {
+
     public void insert(Sach model) {
         String sql = "INSERT INTO Sach (MaSach, TenSach, NhaXB, TacGia, SoLuong, GiaTien,NgayNK) VALUES (?, ?, ?, ?, ?, ?,?)";
         JdbcHelper.executeUpdate(sql,
@@ -87,13 +88,14 @@ public class SachDAO {
         model.setNgayNK(rs.getDate("NgayNK"));
         return model;
     }
+
     public List<Sach> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM Sach WHERE TenSach LIKE ?";
         return select(sql, "%" + keyword + "%");
     }
-      public List<Sach> selectByCourse(Integer masach) {
+
+    public List<Sach> selectByCourse(Integer masach) {
         String sql = "SELECT * FROM Sach WHERE MaSach NOT IN (SELECT MaSach FROM HocVien WHERE MaSach=?)";
         return select(sql, masach);
     }
 }
-

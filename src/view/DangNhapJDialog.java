@@ -89,17 +89,21 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
 
-        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/security.png"))); // NOI18N
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon-login-0.jpg"))); // NOI18N
         lblImage.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        lblMaNV.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMaNV.setText("Tên đăng nhập");
 
+        lblMatKhau.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMatKhau.setText("Mật khẩu");
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(0, 102, 51));
+        lblTitle.setForeground(new java.awt.Color(0, 51, 255));
         lblTitle.setText("ĐĂNG NHẬP");
 
+        btnDangNhap.setBackground(new java.awt.Color(51, 153, 255));
+        btnDangNhap.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDangNhap.setText("Đăng nhập");
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +111,8 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             }
         });
 
+        btnKetThuc.setBackground(new java.awt.Color(51, 153, 255));
+        btnKetThuc.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnKetThuc.setText("Kết thúc");
         btnKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,28 +127,33 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             .addGroup(pnlFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblMaNV)
-                        .addComponent(lblMatKhau)
-                        .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                        .addComponent(txtMaNV)
-                        .addComponent(txtMatKhau))
+                    .addComponent(txtMatKhau)
                     .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addComponent(btnDangNhap)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnKetThuc)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(pnlFormLayout.createSequentialGroup()
+                                    .addComponent(btnDangNhap)
+                                    .addGap(42, 42, 42)
+                                    .addComponent(btnKetThuc))
+                                .addGroup(pnlFormLayout.createSequentialGroup()
+                                    .addComponent(lblTitle)
+                                    .addGap(47, 47, 47)))
+                            .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMaNV)
+                            .addComponent(lblMatKhau))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlFormLayout.setVerticalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addComponent(lblMaNV)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(lblMatKhau)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,25 +168,19 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(lblImage)
-                    .addGap(0, 0, 0)
-                    .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblImage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pnlForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnlForm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

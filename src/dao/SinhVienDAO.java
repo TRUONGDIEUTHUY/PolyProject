@@ -17,6 +17,7 @@ import model.SinhVien;
  * @author ASUS
  */
 public class SinhVienDAO {
+
     public void insert(SinhVien model) {
         String sql = "INSERT INTO SinhVien (MaSV, TenSV, NgaySinh, GioiTinh, ChuyenNganh, Email, Lop,Sdt) VALUES( ?,  ?,  ?,  ?,  ?,  ?,  ?,  ?)";
         JdbcHelper.executeUpdate(sql,

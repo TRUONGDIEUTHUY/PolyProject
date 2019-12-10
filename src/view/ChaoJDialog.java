@@ -23,20 +23,21 @@ public class ChaoJDialog extends javax.swing.JDialog {
         initComponents();
         init();
     }
-        void init(){
+
+    void init() {
         setLocationRelativeTo(null);
         new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               int value = progressBar.getValue();
-               if(value<100){
-                   progressBar.setValue(value + 1);
-               }else{
-                   ChaoJDialog.this.dispose();
-               }
+                int value = progressBar.getValue();
+                if (value < 100) {
+                    progressBar.setValue(value + 1);
+                } else {
+                    ChaoJDialog.this.dispose();
+                }
             }
         }).start();
-    
+
     }
 
     /**

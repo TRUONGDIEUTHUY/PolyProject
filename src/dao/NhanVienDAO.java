@@ -17,7 +17,8 @@ import model.NhanVien;
  * @author ASUS
  */
 public class NhanVienDAO {
-      public void insert(NhanVien model) {
+
+    public void insert(NhanVien model) {
         String sql = "INSERT INTO NhanVien (MaNV, MatKhau, HoTen, VaiTro) VALUES (?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
                 model.getMaNV(),
@@ -78,7 +79,8 @@ public class NhanVienDAO {
         model.setVaiTro(rs.getBoolean("VaiTro"));
         return model;
     }
-public List<NhanVien> selectByKeyword(String keyword) {
+
+    public List<NhanVien> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM NhanVien WHERE HoTen LIKE ?";
         return select(sql, "%" + keyword + "%");
     }

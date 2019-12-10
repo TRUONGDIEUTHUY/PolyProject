@@ -19,9 +19,8 @@ import model.PhieuMuon;
 public class PhieuMuonDAO {
 
     public void insert(PhieuMuon model) {
-        String sql = "INSERT INTO PhieuMuon (MaPM, MaSV, MaNV, NgayMuon, NgayTra, TrangThai) VALUES (?,?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PhieuMuon ( MaSV, MaNV, NgayMuon, NgayTra, TrangThai) VALUES (?, ?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
-                model.getMaPM(),
                 model.getMaSV(),
                 model.getMaNV(),
                 model.getNgayMuon(),
@@ -86,9 +85,9 @@ public class PhieuMuonDAO {
 
         return model;
     }
- public List<PhieuMuon> selectByKeyword(String keyword) {
-        String sql = "SELECT * FROM PhieuMuon WHERE TenSV LIKE ?";
+
+    public List<PhieuMuon> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM PhieuMuon WHERE MaPM LIKE ?";
         return select(sql, "%" + keyword + "%");
     }
 }
-

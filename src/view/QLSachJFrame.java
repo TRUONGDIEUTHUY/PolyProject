@@ -52,8 +52,7 @@ public class QLSachJFrame extends javax.swing.JFrame {
                     sa.getTacGia(),
                     sa.getGiaTien(),
                     sa.getSoLuong(),
-                    DateHelper.toString(sa.getNgayNK()),
-                };
+                    DateHelper.toString(sa.getNgayNK()),};
                 model.addRow(row);
             }
         } catch (Exception e) {
@@ -62,7 +61,16 @@ public class QLSachJFrame extends javax.swing.JFrame {
     }
 
     void insert() {
+
         Sach model = getModel();
+        Sach kt = sach.findById(txtMaSach.getText());
+        if (kt != null) {
+            DialogHelper.alert(this, "Trùng mã sách");
+            txtMaSach.setBackground(Color.yellow);
+            return;
+        } else {
+            txtMaSach.setBackground(Color.white);
+        }
         model.setNgayNK(new Date());
         try {
             sach.insert(model);
@@ -122,7 +130,7 @@ public class QLSachJFrame extends javax.swing.JFrame {
 
     void setModel(Sach model) {
         txtMaSach.setText(model.getMaSach());
-        txtTenSach.setText(model.getTacGia());
+        txtTenSach.setText(model.getTenSach());
         txtNhaXB.setText(model.getNhaXB());
         txtTacGia.setText(model.getTacGia());
         txtGiaTien.setText(String.valueOf(model.getGiaTien()));
@@ -155,46 +163,48 @@ public class QLSachJFrame extends javax.swing.JFrame {
         btnNext.setEnabled(!insertable && last);
 
     }
- public boolean isvalid() {
+
+    public boolean isvalid() {
         String reTen = "[a-zA-Z ]+";
-        if (txtMaSach.getText().isEmpty() || txtTenSach.getText().isEmpty() || txtNhaXB.getText().isEmpty() || txtTacGia.getText().isEmpty() || txtGiaTien.getText().isEmpty()|| txtSoLuong.getText().isEmpty()|| txtNgayNK.getText().isEmpty()) {
+        if (txtMaSach.getText().isEmpty() || txtTenSach.getText().isEmpty() || txtNhaXB.getText().isEmpty() || txtTacGia.getText().isEmpty() || txtGiaTien.getText().isEmpty() || txtSoLuong.getText().isEmpty() || txtNgayNK.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin");
             return false;
         } else {
-        if (txtMaSach.getText().length() < 5 || txtMaSach.getText().length() > 5) {
-            JOptionPane.showMessageDialog(this, "Mã sách phải đúng 5 kí tự");
-            txtMaSach.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtMaSach.setBackground(Color.white);
-        }
-        if (txtTenSach.getText().matches(reTen) == false) {
-            JOptionPane.showMessageDialog(this, "Tên sách chỉ chứa alphabet và ký tự trắng");
-            txtTenSach.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtTenSach.setBackground(Color.white);
-        }
+            if (txtMaSach.getText().length() < 5 || txtMaSach.getText().length() < 5) {
+                JOptionPane.showMessageDialog(this, "Mã sách phải ít nhất 5 kí tự");
+                txtMaSach.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtMaSach.setBackground(Color.white);
+            }
+            if (txtTenSach.getText().matches(reTen) == false) {
+                JOptionPane.showMessageDialog(this, "Tên sách chỉ chứa alphabet và ký tự trắng");
+                txtTenSach.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtTenSach.setBackground(Color.white);
+            }
             if (Integer.parseInt(txtSoLuong.getText()) < 0) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn hoặc bằng 0");
-            txtSoLuong.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtSoLuong.setBackground(Color.white);
+                JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn hoặc bằng 0");
+                txtSoLuong.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtSoLuong.setBackground(Color.white);
 
-        }
-        if (Integer.parseInt(txtGiaTien.getText()) < 0) {
-            JOptionPane.showMessageDialog(this, "Giá tiền phải lớn hơn hoặc bằng 0");
-            txtGiaTien.setBackground(Color.yellow);
-            return false;
-        } else {
-            txtGiaTien.setBackground(Color.white);
+            }
+            if (Integer.parseInt(txtGiaTien.getText()) < 0) {
+                JOptionPane.showMessageDialog(this, "Giá tiền phải lớn hơn hoặc bằng 0");
+                txtGiaTien.setBackground(Color.yellow);
+                return false;
+            } else {
+                txtGiaTien.setBackground(Color.white);
 
-        }
+            }
         }
         return true;
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,7 +227,10 @@ public class QLSachJFrame extends javax.swing.JFrame {
         txtNhaXB = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         txtGiaTien = new javax.swing.JTextField();
-        btnInsert = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtSoLuong = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtNgayNK = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
@@ -225,10 +238,7 @@ public class QLSachJFrame extends javax.swing.JFrame {
         btnPrev = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnLast = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txtSoLuong = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtNgayNK = new javax.swing.JTextField();
+        btnInsert = new javax.swing.JButton();
         pnlEdit = new javax.swing.JPanel();
         pnlTimKiem = new javax.swing.JPanel();
         txtTimKiem = new javax.swing.JTextField();
@@ -236,7 +246,7 @@ public class QLSachJFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblGridView = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ ĐÀO TẠO"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -245,15 +255,27 @@ public class QLSachJFrame extends javax.swing.JFrame {
         });
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(0, 0, 204));
+        lblTitle.setForeground(new java.awt.Color(0, 51, 255));
         lblTitle.setText("QUẢN LÝ SÁCH");
 
+        tabs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        lblMaNH.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMaNH.setText("Mã sách");
 
+        lblHoTen.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblHoTen.setText("Tên sách");
 
+        txtTenSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTenSachActionPerformed(evt);
+            }
+        });
+
+        lblGioiTinh.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblGioiTinh.setText("Nhà xuất bản");
 
+        lblNgaySinh.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNgaySinh.setText("Tác giả");
 
         txtNhaXB.addActionListener(new java.awt.event.ActionListener() {
@@ -262,64 +284,10 @@ public class QLSachJFrame extends javax.swing.JFrame {
             }
         });
 
+        lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblEmail.setText("Giá tiền");
 
-        btnInsert.setText("Thêm");
-        btnInsert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setText("Sửa");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setText("Xóa");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnClear.setText("Mới");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
-
-        btnFirst.setText("|<");
-        btnFirst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFirstActionPerformed(evt);
-            }
-        });
-
-        btnPrev.setText("<<");
-        btnPrev.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrevActionPerformed(evt);
-            }
-        });
-
-        btnNext.setText(">>");
-        btnNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNextActionPerformed(evt);
-            }
-        });
-
-        btnLast.setText(">|");
-        btnLast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLastActionPerformed(evt);
-            }
-        });
-
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Số lượng");
 
         txtSoLuong.addActionListener(new java.awt.event.ActionListener() {
@@ -328,7 +296,82 @@ public class QLSachJFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Ngày nhập kho");
+
+        btnUpdate.setBackground(new java.awt.Color(51, 153, 255));
+        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Edit.png"))); // NOI18N
+        btnUpdate.setText("Sửa");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setBackground(new java.awt.Color(51, 153, 255));
+        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
+        btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnClear.setBackground(new java.awt.Color(51, 153, 255));
+        btnClear.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add.png"))); // NOI18N
+        btnClear.setText("Mới");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
+        btnFirst.setBackground(new java.awt.Color(51, 153, 255));
+        btnFirst.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/first.png"))); // NOI18N
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
+
+        btnPrev.setBackground(new java.awt.Color(51, 153, 255));
+        btnPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
+        btnPrev.setMaximumSize(new java.awt.Dimension(63, 33));
+        btnPrev.setMinimumSize(new java.awt.Dimension(63, 33));
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
+
+        btnNext.setBackground(new java.awt.Color(51, 153, 255));
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/next.png"))); // NOI18N
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+
+        btnLast.setBackground(new java.awt.Color(51, 153, 255));
+        btnLast.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/last.png"))); // NOI18N
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
+
+        btnInsert.setBackground(new java.awt.Color(51, 153, 255));
+        btnInsert.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Save.png"))); // NOI18N
+        btnInsert.setText("Thêm");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
         pnlList.setLayout(pnlListLayout);
@@ -356,25 +399,24 @@ public class QLSachJFrame extends javax.swing.JFrame {
                             .addComponent(txtTacGia)
                             .addComponent(txtGiaTien, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)))
                     .addGroup(pnlListLayout.createSequentialGroup()
-                        .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlListLayout.createSequentialGroup()
-                                .addComponent(btnInsert)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnUpdate)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnClear)
-                                .addGap(90, 90, 90)
-                                .addComponent(btnFirst)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPrev)
-                                .addGap(10, 10, 10)
-                                .addComponent(btnNext)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLast))
-                            .addComponent(jLabel2))
-                        .addGap(0, 17, Short.MAX_VALUE)))
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlListLayout.createSequentialGroup()
+                        .addComponent(btnInsert)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(btnFirst)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNext)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLast)))
                 .addContainerGap())
         );
         pnlListLayout.setVerticalGroup(
@@ -404,27 +446,31 @@ public class QLSachJFrame extends javax.swing.JFrame {
                 .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNgayNK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsert)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnClear)
-                    .addComponent(btnFirst)
-                    .addComponent(btnPrev)
-                    .addComponent(btnNext)
-                    .addComponent(btnLast))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete)
+                        .addComponent(btnClear)))
+                .addContainerGap())
         );
 
         tabs.addTab("CẬP NHẬT", pnlList);
 
-        pnlTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌM KIẾM"));
+        pnlTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TÌM KIẾM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        btnTimKiem.setBackground(new java.awt.Color(51, 153, 255));
+        btnTimKiem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Search.png"))); // NOI18N
         btnTimKiem.setText("Tìm");
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,7 +484,7 @@ public class QLSachJFrame extends javax.swing.JFrame {
             pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTimKiemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtTimKiem)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTimKiem)
                 .addContainerGap())
@@ -484,15 +530,15 @@ public class QLSachJFrame extends javax.swing.JFrame {
         pnlEditLayout.setHorizontalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
         );
         pnlEditLayout.setVerticalGroup(
             pnlEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEditLayout.createSequentialGroup()
                 .addComponent(pnlTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabs.addTab("DANH SÁCH", pnlEdit);
@@ -504,9 +550,11 @@ public class QLSachJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitle)
-                    .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tabs)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTitle)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,48 +565,10 @@ public class QLSachJFrame extends javax.swing.JFrame {
                 .addComponent(tabs))
         );
 
+        tabs.getAccessibleContext().setAccessibleDescription("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-      if(this.isvalid()){
-            this.insert();
-        }
-    }//GEN-LAST:event_btnInsertActionPerformed
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-         if(this.isvalid()){
-            this.update();
-        }
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.delete();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        this.clear();
-    }//GEN-LAST:event_btnClearActionPerformed
-
-    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
-        this.index = 0;
-        this.edit();
-    }//GEN-LAST:event_btnFirstActionPerformed
-
-    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        this.index--;
-        this.edit();
-    }//GEN-LAST:event_btnPrevActionPerformed
-
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        this.index++;
-        this.edit();
-    }//GEN-LAST:event_btnNextActionPerformed
-
-    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-        this.index = tblGridView.getRowCount() - 1;
-        this.edit();
-    }//GEN-LAST:event_btnLastActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
         // TODO add your handling code here:
@@ -591,6 +601,52 @@ public class QLSachJFrame extends javax.swing.JFrame {
         this.clear();
         this.setStatus(true);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (this.isvalid()) {
+            this.update();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        this.delete();
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        this.clear();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        this.index = 0;
+        this.edit();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        this.index--;
+        this.edit();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        this.index++;
+        this.edit();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        this.index = tblGridView.getRowCount() - 1;
+        this.edit();
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        if (this.isvalid()) {
+            this.insert();
+        }
+    }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void txtTenSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenSachActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenSachActionPerformed
 
     /**
      * @param args the command line arguments

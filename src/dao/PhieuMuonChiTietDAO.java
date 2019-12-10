@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import model.PhieuMuonChiTiet;
 
-
-
 /**
  *
  * @author ASUS
  */
 public class PhieuMuonChiTietDAO {
+
     public void insert(PhieuMuonChiTiet model) {
         String sql = "INSERT INTO PhieuMuonChiTiet(MaPM, MaSach, SoLuong) VALUES(?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
@@ -80,4 +79,3 @@ public class PhieuMuonChiTietDAO {
         return model;
     }
 }
-
